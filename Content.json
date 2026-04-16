@@ -1,113 +1,390 @@
 {
-  "scenes": [
+  "songs": [
     {
-      "id": 1,
-      "title": "Childhood",
-      "lines": [
-        "Before the world had a name for her…",
-        "she was already learning how to hold light."
-      ],
-      "image": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1920&q=80",
-      "duration": 15,
-      "overlay": "rgba(10,5,0,0.45)",
-      "kenBurns": "zoom-in"
+      "title": "Kasoor — Prateek Kuhad",
+      "start": 30,
+      "volume": 0.85,
+      "fadeIn": 800,
+      "fadeOut": 1200
     },
     {
-      "id": 2,
-      "title": "Growing Up",
-      "lines": [
-        "Somewhere between then and now,",
-        "she stopped being a child — quietly, gracefully."
-      ],
-      "image": "https://images.unsplash.com/photo-1504203700686-f21e703e5f1c?w=1920&q=80",
-      "duration": 15,
-      "overlay": "rgba(5,10,20,0.5)",
-      "kenBurns": "zoom-out"
+      "title": "Baarishein — Atif Aslam",
+      "start": 15,
+      "volume": 0.85,
+      "fadeIn": 800,
+      "fadeOut": 1200
     },
     {
-      "id": 3,
-      "title": "Personality",
-      "lines": [
-        "She doesn't ask for attention.",
-        "She just walks in — and the room shifts."
-      ],
-      "image": "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1920&q=80",
-      "duration": 15,
-      "overlay": "rgba(0,10,15,0.5)",
-      "kenBurns": "pan-right"
+      "title": "Tum Hi Ho — Arijit Singh",
+      "start": 10,
+      "volume": 0.85,
+      "fadeIn": 800,
+      "fadeOut": 1200
     },
     {
-      "id": 4,
-      "title": "Shared Memories",
-      "lines": [
-        "Some moments don't need photographs.",
-        "They live in the pause between words."
-      ],
-      "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
-      "duration": 20,
-      "overlay": "rgba(5,5,15,0.55)",
-      "kenBurns": "pan-left"
+      "title": "Tera Yaar Hoon Main — Arijit",
+      "start": 12,
+      "volume": 0.85,
+      "fadeIn": 800,
+      "fadeOut": 1200
     },
     {
-      "id": 5,
-      "title": "Distance",
-      "lines": [
-        "Things change.",
-        "And yet, some people stay — in their own quiet way."
-      ],
-      "image": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80",
-      "duration": 20,
-      "overlay": "rgba(0,0,5,0.6)",
-      "kenBurns": "zoom-in"
-    },
-    {
-      "id": 6,
-      "title": "Present",
-      "lines": [
-        "Today, on your birthday —",
-        "this is for you. Just you."
-      ],
-      "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
-      "duration": 20,
-      "overlay": "rgba(5,0,10,0.5)",
-      "kenBurns": "zoom-out"
+      "title": "Khairiyat — Arijit Singh",
+      "start": 18,
+      "volume": 0.85,
+      "fadeIn": 1000,
+      "fadeOut": 1200
     }
   ],
-  "music": [
+  "slides": [
     {
-      "id": 1,
-      "label": "Intro Instrumental",
-      "url": "https://cdn.pixabay.com/download/audio/2022/03/10/audio_270f29b742.mp3",
-      "startAt": 0,
-      "volume": 0.6
+      "img": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1600&q=85",
+      "tint": "rgba(40,20,8,0.32)",
+      "kenBurns": "zoom-in",
+      "pos": "pos-bc",
+      "song": 0,
+      "dur": 9000,
+      "lines": [
+        {
+          "text": "There are people you meet",
+          "delay": 1
+        },
+        {
+          "text": "and the world quietly shifts.",
+          "delay": 2,
+          "color": "gold"
+        }
+      ]
     },
     {
-      "id": 2,
-      "label": "Hindi Nostalgic",
-      "url": "https://cdn.pixabay.com/download/audio/2023/06/19/audio_8b0c2a0b2f.mp3",
-      "startAt": 15,
-      "volume": 0.7
+      "img": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&q=85",
+      "tint": "rgba(30,12,5,0.3)",
+      "kenBurns": "pan-right",
+      "pos": "pos-bl",
+      "song": 0,
+      "dur": 9000,
+      "lines": [
+        {
+          "text": "She was one of them.",
+          "delay": 1,
+          "size": "big",
+          "color": "gold"
+        }
+      ]
     },
     {
-      "id": 3,
-      "label": "Hindi Emotional",
-      "url": "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3",
-      "startAt": 35,
-      "volume": 0.65
+      "img": "https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1600&q=85",
+      "tint": "rgba(20,10,20,0.28)",
+      "kenBurns": "zoom-out",
+      "pos": "pos-mc",
+      "song": 0,
+      "dur": 10000,
+      "lines": [
+        {
+          "text": "Kuch toh tha,",
+          "delay": 1,
+          "color": "gold"
+        },
+        {
+          "text": "jo aankhon ne bola,",
+          "delay": 2
+        },
+        {
+          "text": "jo lafzon ne nahi.",
+          "delay": 3,
+          "color": "rose"
+        }
+      ]
     },
     {
-      "id": 4,
-      "label": "English Reflective",
-      "url": "https://cdn.pixabay.com/download/audio/2021/11/25/audio_cb31e1e7b2.mp3",
-      "startAt": 55,
-      "volume": 0.6
+      "img": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1600&q=85",
+      "tint": "rgba(30,10,5,0.28)",
+      "kenBurns": "drift-up",
+      "pos": "pos-bc",
+      "song": 0,
+      "dur": 9000,
+      "lines": [
+        {
+          "text": "Kasoor tera nahi.",
+          "delay": 1,
+          "size": "big",
+          "color": "gold"
+        },
+        {
+          "text": "Aur mera bhi nahi.",
+          "delay": 2
+        }
+      ]
     },
     {
-      "id": 5,
-      "label": "Soft Closure",
-      "url": "https://cdn.pixabay.com/download/audio/2022/08/02/audio_884fe92c21.mp3",
-      "startAt": 75,
-      "volume": 0.5
+      "img": "https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=1600&q=85",
+      "tint": "rgba(5,15,32,0.38)",
+      "kenBurns": "zoom-in",
+      "pos": "pos-bc",
+      "song": 1,
+      "dur": 9500,
+      "lines": [
+        {
+          "text": "Baarish jab bhi ho —",
+          "delay": 1,
+          "color": "blue"
+        },
+        {
+          "text": "teri yaad aati hai.",
+          "delay": 2
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=1600&q=85",
+      "tint": "rgba(5,18,35,0.35)",
+      "kenBurns": "drift-up",
+      "pos": "pos-ml",
+      "song": 1,
+      "dur": 9000,
+      "lines": [
+        {
+          "text": "Some feelings",
+          "delay": 1
+        },
+        {
+          "text": "don't have names.",
+          "delay": 2,
+          "size": "big"
+        },
+        {
+          "text": "They just live.",
+          "delay": 3,
+          "color": "blue"
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1473621038790-b778b4750efe?w=1600&q=85",
+      "tint": "rgba(8,12,30,0.38)",
+      "kenBurns": "pan-right",
+      "pos": "pos-tc",
+      "song": 1,
+      "dur": 9500,
+      "lines": [
+        {
+          "text": "Jo dil mein tha —",
+          "delay": 1
+        },
+        {
+          "text": "woh kabhi keh nahi paaye.",
+          "delay": 2,
+          "color": "rose"
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=85",
+      "tint": "rgba(30,8,5,0.28)",
+      "kenBurns": "zoom-in",
+      "pos": "pos-mc",
+      "song": 2,
+      "dur": 10000,
+      "lines": [
+        {
+          "text": "Tum hi ho.",
+          "delay": 1,
+          "size": "big",
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1600&q=85",
+      "tint": "rgba(22,8,5,0.28)",
+      "kenBurns": "pan-left",
+      "pos": "pos-bl",
+      "song": 2,
+      "dur": 9000,
+      "lines": [
+        {
+          "text": "Har ek lamhe mein,",
+          "delay": 1
+        },
+        {
+          "text": "sirf tum.",
+          "delay": 2,
+          "size": "big",
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=1600&q=85",
+      "tint": "rgba(18,6,4,0.3)",
+      "kenBurns": "drift-up",
+      "pos": "pos-tc",
+      "song": 2,
+      "dur": 9500,
+      "lines": [
+        {
+          "text": "There is something rare",
+          "delay": 1
+        },
+        {
+          "text": "about a person who makes",
+          "delay": 2
+        },
+        {
+          "text": "the world feel like home.",
+          "delay": 3,
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&q=85",
+      "tint": "rgba(28,15,0,0.25)",
+      "kenBurns": "zoom-out",
+      "pos": "pos-tc",
+      "song": 3,
+      "dur": 9000,
+      "lines": [
+        {
+          "text": "Tera yaar hoon main.",
+          "delay": 1,
+          "size": "big",
+          "color": "gold"
+        },
+        {
+          "text": "Sada ke liye.",
+          "delay": 2
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1524117074681-31bd4de22ad3?w=1600&q=85",
+      "tint": "rgba(30,18,0,0.26)",
+      "kenBurns": "pan-right",
+      "pos": "pos-bl",
+      "song": 3,
+      "dur": 9000,
+      "lines": [
+        {
+          "text": "The laughs that made",
+          "delay": 1
+        },
+        {
+          "text": "everything okay.",
+          "delay": 2,
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=1600&q=85",
+      "tint": "rgba(22,12,0,0.26)",
+      "kenBurns": "pan-left",
+      "pos": "pos-mc",
+      "song": 3,
+      "dur": 9500,
+      "lines": [
+        {
+          "text": "Woh waqt,",
+          "delay": 1
+        },
+        {
+          "text": "jo kabhi lautega nahi —",
+          "delay": 2
+        },
+        {
+          "text": "par dil mein hai.",
+          "delay": 3,
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1500622944204-b135684e99fd?w=1600&q=85",
+      "tint": "rgba(5,5,22,0.33)",
+      "kenBurns": "drift-up",
+      "pos": "pos-bc",
+      "song": 4,
+      "dur": 9500,
+      "lines": [
+        {
+          "text": "Khairiyat pooch,",
+          "delay": 1,
+          "color": "blue"
+        },
+        {
+          "text": "kabhi toh khairiyat pooch.",
+          "delay": 2
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=1600&q=85",
+      "tint": "rgba(8,5,20,0.35)",
+      "kenBurns": "zoom-in",
+      "pos": "pos-bc",
+      "song": 4,
+      "dur": 10000,
+      "lines": [
+        {
+          "text": "And today —",
+          "delay": 1
+        },
+        {
+          "text": "on your birthday,",
+          "delay": 2,
+          "size": "big",
+          "color": "gold"
+        },
+        {
+          "text": "I just want you to feel it all.",
+          "delay": 3
+        }
+      ]
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=85",
+      "tint": "rgba(5,0,18,0.35)",
+      "kenBurns": "zoom-out",
+      "pos": "pos-mc",
+      "song": 4,
+      "dur": 13000,
+      "lines": [
+        {
+          "text": "Happy Birthday.",
+          "delay": 1,
+          "size": "big",
+          "color": "gold"
+        },
+        {
+          "text": "You deserve every beautiful thing.",
+          "delay": 2
+        },
+        {
+          "text": "Every single one.",
+          "delay": 3,
+          "color": "rose"
+        }
+      ]
     }
-  ]
+  ],
+  "endCard": {
+    "pre": "With love, always",
+    "title": "Happy Birthday.",
+    "sub": "You deserve the whole world.",
+    "msg": "Every song, every frame —\nmade only for you."
+  },
+  "page": {
+    "eyebrow": "A Gift in Sound & Vision",
+    "title": "For Her.",
+    "sub": "A love letter in music",
+    "desc": "Every song chosen with intention. Every frame made only for you. Press play and let the feeling find you.",
+    "btn": "Begin",
+    "footnote": "Headphones on. Lights low.",
+    "tabTitle": "For Her",
+    "name": "Her",
+    "colorAccent": "#e8a96a",
+    "colorBg": "#09080f",
+    "ogDesc": "A love letter in music, made just for you."
+  }
 }
