@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin — For Her</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#09080f;
+  --surface:#111019;
+  --surface2:#161524;
+  --surface3:#1c1b2e;
+  --border:rgba(255,255,255,0.07);
+  --border-hover:rgba(255,255,255,0.13);
+  --gold:#e8a96a;
+  --gold-dim:rgba(232,169,106,0.12);
+  --gold-border:rgba(232,169,106,0.22);
+  --white:#f0e8da;
+  --dim:rgba(240,232,218,0.42);
+  --dim2:rgba(240,232,218,0.22);
+  --danger:#c45c5c;
+  --success:#5aac7e;
+  --rose:#e8a0a2;
+  --blue:#8ac4e0;
+  --ph:'Playfair Display',serif;
+  --fb:'Jost',sans-serif;
+}
+body{background:var(--bg);color:var(--white);font-family:var(--fb);font-weight:300;min-height:100vh;padding-bottom:80px;-webkit-font-smoothing:antialiased;}
+
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:160px;}
+
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 36px;
+  border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(9,8,15,.95);
+  backdrop-filter:blur(12px);z-index:100;}
+.logo{display:flex;align-items:center;gap:14px;}
+.logo-icon{width:30px;height:30px;border:1px solid var(--gold-border);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-icon::after{content:'';width:0;height:0;
+  border-left:8px solid var(--gold);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;
+  margin-left:2px;}
+.logo-text{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);}
+.logo-text strong{color:var(--white);font-weight:400;}
+.header-right{display:flex;gap:10px;align-items:center;}
+
+.btn{padding:9px 22px;font-family:var(--fb);font-weight:300;font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;border:none;border-radius:2px;
+  cursor:pointer;transition:all .3s;line-height:1;}
+.btn-primary{background:var(--gold);color:#09080f;font-weight:500;}
+.btn-primary:hover{filter:brightness(1.08);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--dim);}
+.btn-ghost:hover{border-color:var(--gold-border);color:var(--gold);}
+.btn-danger{background:transparent;border:1px solid rgba(196,92,92,.25);color:var(--danger);
+  padding:6px 14px;font-size:9px;}
+.btn-danger:hover{background:rgba(196,92,92,.08);}
+.btn-add{display:block;width:100%;padding:13px;background:var(--gold-dim);
+  border:1px dashed rgba(232,169,106,.25);border-radius:2px;color:rgba(232,169,106,.6);
+  font-family:var(--fb);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  cursor:pointer;transition:all .3s;margin-top:14px;}
+.btn-add:hover{background:rgba(232,169,106,.1);color:var(--gold);border-color:var(--gold-border);}
+
+main{max-width:1180px;margin:0 auto;padding:36px 28px;}
+
+.tab-bar{display:flex;border-bottom:1px solid var(--border);margin-bottom:36px;gap:2px;flex-wrap:wrap;}
+.tab{padding:12px 24px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--dim2);cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .3s;background:none;border-top:none;border-left:none;
+  border-right:none;font-family:var(--fb);font-weight:300;}
+.tab:hover{color:var(--dim);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+.slides-list{display:flex;flex-direction:column;gap:14px;}
+.slide-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;overflow:hidden;transition:border-color .25s;}
+.slide-card:hover{border-color:var(--border-hover);}
+.slide-card.open{border-color:rgba(232,169,106,.18);}
+
+.slide-card-header{display:flex;align-items:center;gap:14px;padding:15px 22px;cursor:pointer;
+  border-bottom:1px solid transparent;transition:border-color .2s;}
+.slide-card.open .slide-card-header{border-bottom-color:var(--border);}
+
+.slide-num{width:26px;height:26px;border:1px solid var(--gold-border);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);flex-shrink:0;font-weight:300;}
+.slide-card-title{flex:1;font-size:13px;letter-spacing:.02em;color:var(--white);}
+.slide-card-meta{font-size:10px;color:var(--dim2);letter-spacing:.1em;}
+.slide-toggle{color:var(--dim2);transition:transform .3s;font-size:10px;}
+.slide-card.open .slide-toggle{transform:rotate(180deg);}
+
+.slide-card-body{display:none;padding:22px;}
+.slide-card.open .slide-card-body{display:block;}
+
+.songs-list{display:flex;flex-direction:column;gap:12px;}
+.song-card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:18px 22px;transition:border-color .25s;}
+.song-card:hover{border-color:var(--border-hover);}
+
+.song-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.song-num{width:30px;height:30px;background:var(--gold-dim);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:var(--ph);
+  font-style:italic;font-size:13px;color:var(--gold);flex-shrink:0;}
+.song-label{flex:1;font-size:14px;color:var(--white);}
+.song-idx{font-size:9px;color:var(--gold);letter-spacing:.15em;background:rgba(232,169,106,.08);
+  padding:3px 10px;border-radius:10px;text-transform:uppercase;}
+
+/* AUDIO PLAYER PREVIEW */
+.audio-player-mini{display:flex;align-items:center;gap:10px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:2px;padding:10px 14px;margin-top:8px;}
+.audio-player-mini audio{flex:1;height:28px;filter:invert(0.8) sepia(1) saturate(0.4) hue-rotate(340deg);}
+.audio-badge{font-size:9px;letter-spacing:.12em;background:rgba(90,172,126,.12);
+  border:1px solid rgba(90,172,126,.25);color:var(--success);padding:3px 10px;border-radius:10px;
+  white-space:nowrap;flex-shrink:0;}
+.audio-badge.none{background:var(--gold-dim);border-color:var(--gold-border);color:rgba(232,169,106,.6);}
+
+/* AUDIO UPLOAD */
+.audio-upload-row{display:flex;gap:8px;align-items:stretch;}
+.audio-upload-row input[type="text"]{flex:1;}
+.audio-upload-label{flex-shrink:0;padding:9px 16px;background:var(--gold-dim);
+  border:1px dashed rgba(232,169,106,.28);border-radius:2px;color:rgba(232,169,106,.6);
+  font-family:var(--fb);font-size:10px;letter-spacing:.15em;cursor:pointer;
+  transition:all .25s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.audio-upload-label:hover{background:rgba(232,169,106,.12);color:var(--gold);}
+.file-input{display:none;}
+
+.endcard-wrap{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:28px;}
+.preview-card{background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:28px;
+  text-align:center;margin-bottom:28px;}
+.preview-pre{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:rgba(232,169,106,.5);margin-bottom:10px;}
+.preview-title{font-family:var(--ph);font-style:italic;font-size:clamp(2rem,5vw,3.5rem);color:var(--white);line-height:1;margin-bottom:6px;}
+.preview-sub{font-family:var(--ph);font-style:italic;font-size:1.1rem;color:rgba(232,169,106,.6);}
+.preview-orn{display:flex;align-items:center;justify-content:center;gap:12px;margin:18px 0;}
+.preview-line{width:50px;height:1px;}
+.preview-line.l{background:linear-gradient(to right,transparent,rgba(232,169,106,.3));}
+.preview-line.r{background:linear-gradient(to left,transparent,rgba(232,169,106,.3));}
+.preview-diamond{width:4px;height:4px;background:var(--gold);transform:rotate(45deg);}
+.preview-msg{font-family:var(--ph);font-style:italic;font-size:1rem;color:rgba(240,232,218,.4);line-height:1.7;}
+
+/* PAGE EDITOR */
+.page-editor-wrap{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:28px;}
+.page-preview-mock{background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:32px;
+  text-align:center;margin-bottom:28px;position:relative;overflow:hidden;}
+.page-preview-mock::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(232,169,106,0.06) 0%,transparent 70%);}
+.mock-eyebrow{font-size:8px;letter-spacing:.5em;text-transform:uppercase;color:rgba(232,169,106,.4);margin-bottom:16px;}
+.mock-title{font-family:var(--ph);font-style:italic;font-size:clamp(1.8rem,5vw,3rem);color:var(--white);line-height:1.1;margin-bottom:8px;}
+.mock-sub{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim2);margin-bottom:20px;}
+.mock-desc{font-size:13px;color:var(--dim);line-height:1.8;max-width:480px;margin:0 auto 20px;}
+.mock-btn{display:inline-block;padding:12px 36px;background:var(--gold);color:#09080f;
+  font-family:var(--fb);font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;border-radius:2px;}
+.mock-footnote{font-size:10px;color:var(--dim2);margin-top:14px;letter-spacing:.1em;}
+
+.section-title{font-size:9px;letter-spacing:.38em;text-transform:uppercase;
+  color:rgba(232,169,106,.5);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:7px;}
+.form-group.full{grid-column:1/-1;}
+label{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--dim2);}
+input,select,textarea{background:var(--surface3);border:1px solid var(--border);
+  border-radius:2px;color:var(--white);font-family:var(--fb);font-weight:300;
+  font-size:13px;padding:9px 12px;transition:border-color .25s;width:100%;appearance:none;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold-border);}
+input::placeholder,textarea::placeholder{color:var(--dim2);}
+select option{background:var(--surface2);}
+textarea{resize:vertical;min-height:72px;line-height:1.6;}
+
+.upload-row{display:flex;gap:8px;align-items:stretch;}
+.upload-row input{flex:1;}
+.upload-label{flex-shrink:0;padding:9px 16px;background:var(--gold-dim);
+  border:1px dashed rgba(232,169,106,.28);border-radius:2px;color:rgba(232,169,106,.6);
+  font-family:var(--fb);font-size:10px;letter-spacing:.15em;cursor:pointer;
+  transition:all .25s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.upload-label:hover{background:rgba(232,169,106,.12);color:var(--gold);}
+.img-preview{width:100%;height:80px;object-fit:cover;border-radius:2px;
+  border:1px solid var(--border);margin-top:8px;display:none;}
+.img-preview.show{display:block;}
+
+.lines-editor{display:flex;flex-direction:column;gap:8px;}
+.line-row{display:flex;gap:7px;align-items:center;background:var(--surface2);
+  border:1px solid var(--border);border-radius:2px;padding:8px 10px;}
+.line-row input[type="text"]{flex:1;background:transparent;border:none;padding:0;font-size:13px;}
+.line-row input[type="text"]:focus{outline:none;border:none;}
+.line-row select{width:100px;flex-shrink:0;background:var(--surface3);padding:5px 8px;font-size:11px;}
+.line-row .del-line{flex-shrink:0;background:none;border:none;color:rgba(196,92,92,.4);
+  cursor:pointer;font-size:14px;padding:2px 4px;transition:color .2s;line-height:1;}
+.line-row .del-line:hover{color:var(--danger);}
+.add-line-btn{background:transparent;border:1px dashed rgba(232,169,106,.18);
+  color:rgba(232,169,106,.38);font-family:var(--fb);font-size:9px;letter-spacing:.18em;
+  padding:8px;cursor:pointer;border-radius:2px;transition:all .25s;width:100%;margin-top:6px;
+  text-transform:uppercase;}
+.add-line-btn:hover{border-color:var(--gold-border);color:var(--gold);}
+
+.form-footer{display:flex;justify-content:flex-end;align-items:center;
+  gap:8px;margin-top:18px;padding-top:18px;border-top:1px solid var(--border);}
+
+.export-wrap{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:28px;}
+.export-title{font-family:var(--ph);font-style:italic;font-size:1.5rem;color:var(--white);margin-bottom:8px;}
+.export-desc{font-size:13px;color:var(--dim);line-height:1.75;margin-bottom:24px;}
+.export-desc code{background:var(--surface2);padding:2px 7px;border-radius:2px;font-size:12px;color:var(--gold);}
+.json-preview{background:var(--surface2);border:1px solid var(--border);border-radius:2px;
+  padding:16px;font-family:'Courier New',monospace;font-size:10px;color:var(--dim2);
+  max-height:280px;overflow:auto;white-space:pre-wrap;margin-bottom:18px;line-height:1.6;}
+.export-actions{display:flex;gap:10px;flex-wrap:wrap;}
+
+.drag-handle{cursor:grab;color:var(--dim2);padding:0 6px 0 0;font-size:14px;user-select:none;flex-shrink:0;}
+.drag-handle:active{cursor:grabbing;}
+
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(16px);
+  background:var(--surface2);border:1px solid var(--gold-border);color:var(--gold);
+  padding:12px 28px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  border-radius:2px;opacity:0;transition:all .4s ease;pointer-events:none;z-index:9999;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+hr{height:1px;background:var(--border);border:none;margin:24px 0;}
+
+.stat-row{display:flex;gap:12px;margin-bottom:28px;}
+.stat-card{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:16px 20px;}
+.stat-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim2);margin-bottom:6px;}
+.stat-value{font-family:var(--ph);font-style:italic;font-size:1.8rem;color:var(--white);line-height:1;}
+.stat-sub{font-size:10px;color:var(--dim2);margin-top:4px;}
+
+.hint{font-size:11px;color:var(--dim2);line-height:1.6;margin-top:6px;padding:10px 12px;
+  background:var(--surface2);border-radius:2px;border-left:2px solid var(--gold-border);}
+
+/* Color picker row for page editor */
+.color-row{display:flex;gap:10px;align-items:center;}
+.color-row input[type="color"]{width:42px;height:34px;padding:2px 3px;cursor:pointer;border-radius:2px;flex-shrink:0;}
+.color-row input[type="text"]{flex:1;}
+
+@media(max-width:680px){
+  .form-grid{grid-template-columns:1fr;}
+  header{padding:16px 20px;}
+  main{padding:24px 16px;}
+  .tab{padding:10px 14px;font-size:9px;}
+  .upload-row,.audio-upload-row{flex-direction:column;}
+  .stat-row{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon"></div>
+    <span class="logo-text">For <strong>Her</strong> — Admin</span>
+  </div>
+  <div class="header-right">
+    <button class="btn btn-ghost" onclick="previewSite()">▶ Preview</button>
+    <button class="btn btn-primary" onclick="goExport()">Export JSON</button>
+  </div>
+</header>
+
+<main>
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('slides',this)">Slides</button>
+    <button class="tab" onclick="switchTab('songs',this)">Songs</button>
+    <button class="tab" onclick="switchTab('endcard',this)">End Card</button>
+    <button class="tab" onclick="switchTab('pageedit',this)">Edit Page</button>
+    <button class="tab" onclick="switchTab('export',this)">Export</button>
+  </div>
+
+  <!-- SLIDES -->
+  <div id="tab-slides" class="tab-content active">
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-label">Total slides</div>
+        <div class="stat-value" id="stat-slides">0</div>
+        <div class="stat-sub">Across all songs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total duration</div>
+        <div class="stat-value" id="stat-dur">0m</div>
+        <div class="stat-sub">Estimated runtime</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Songs used</div>
+        <div class="stat-value" id="stat-songs">0</div>
+        <div class="stat-sub">Active music tracks</div>
+      </div>
+    </div>
+    <div class="slides-list" id="slides-list"></div>
+    <button class="btn-add" onclick="addSlide()">+ Add Slide</button>
+  </div>
+
+  <!-- SONGS -->
+  <div id="tab-songs" class="tab-content">
+    <div class="hint">Upload MP3/WAV/OGG files from your device. Songs are referenced by index (0, 1, 2…) in each slide. Audio is stored as base64 in the JSON — keep files under 8MB each for best performance.</div>
+    <br/>
+    <div class="songs-list" id="songs-list"></div>
+    <button class="btn-add" onclick="addSong()">+ Add Song</button>
+  </div>
+
+  <!-- END CARD -->
+  <div id="tab-endcard" class="tab-content">
+    <div class="endcard-wrap">
+      <p class="section-title">Live Preview</p>
+      <div class="preview-card">
+        <div class="preview-pre" id="prev-pre">With love, always</div>
+        <div class="preview-title" id="prev-title">Happy Birthday.</div>
+        <div class="preview-orn">
+          <div class="preview-line l"></div>
+          <div class="preview-diamond"></div>
+          <div class="preview-line r"></div>
+        </div>
+        <div class="preview-sub" id="prev-sub">You deserve the whole world.</div>
+        <br/>
+        <div class="preview-msg" id="prev-msg">Every song, every frame — made only for you.</div>
+      </div>
+      <p class="section-title">Edit Text</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Small pre-title</label>
+          <input type="text" id="ec-pre" placeholder="With love, always" oninput="updateEndCard('pre',this.value)"/>
+        </div>
+        <div class="form-group">
+          <label>Main title</label>
+          <input type="text" id="ec-title" placeholder="Happy Birthday." oninput="updateEndCard('title',this.value)"/>
+        </div>
+        <div class="form-group">
+          <label>Subtitle line</label>
+          <input type="text" id="ec-sub" placeholder="You deserve the whole world." oninput="updateEndCard('sub',this.value)"/>
+        </div>
+        <div class="form-group">
+          <label>Message (use \n for line breaks)</label>
+          <input type="text" id="ec-msg" placeholder="Every song, every frame —" oninput="updateEndCard('msg',this.value)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT PAGE -->
+  <div id="tab-pageedit" class="tab-content">
+    <div class="page-editor-wrap">
+      <p class="section-title">Live Preview</p>
+      <div class="page-preview-mock">
+        <div class="mock-eyebrow" id="mock-eyebrow">A Gift in Sound &amp; Vision</div>
+        <div class="mock-title" id="mock-title">For Her.</div>
+        <div class="mock-sub" id="mock-sub">A love letter in music</div>
+        <div class="mock-desc" id="mock-desc">Every song chosen with intention. Every frame made only for you. Press play and let the feeling find you.</div>
+        <div class="mock-btn" id="mock-btn">Begin</div>
+        <div class="mock-footnote" id="mock-footnote">Headphones on. Lights low.</div>
+      </div>
+
+      <p class="section-title">Page Identity</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Eyebrow / Pre-title</label>
+          <input type="text" id="pg-eyebrow" placeholder="A Gift in Sound & Vision" oninput="updatePage('eyebrow',this.value)"/>
+        </div>
+        <div class="form-group">
+          <label>Main Heading</label>
+          <input type="text" id="pg-title" placeholder="For Her." oninput="updatePage('title',this.value)"/>
+        </div>
+        <div class="form-group">
+          <label>Subtitle / Tagline</label>
+          <input type="text" id="pg-sub" placeholder="A love letter in music" oninput="updatePage('sub',this.value)"/>
+        </div>
+        <div class="form-group">
+          <label>Start Button Label</label>
+          <input type="text" id="pg-btn" placeholder="Begin" oninput="updatePage('btn',this.value)"/>
+        </div>
+        <div class="form-group full">
+          <label>Description / Intro copy</label>
+          <textarea id="pg-desc" rows="3" placeholder="Every song chosen with intention…" oninput="updatePage('desc',this.value)"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Footnote (shown below button)</label>
+          <input type="text" id="pg-footnote" placeholder="Headphones on. Lights low." oninput="updatePage('footnote',this.value)"/>
+        </div>
+      </div>
+
+      <hr/>
+      <p class="section-title">Browser Tab</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tab / Window Title</label>
+          <input type="text" id="pg-tabtitle" placeholder="For Her" oninput="updatePage('tabTitle',this.value)"/>
+        </div>
+        <div class="form-group">
+          <label>Recipient's Name (used in title)</label>
+          <input type="text" id="pg-name" placeholder="Her" oninput="updatePage('name',this.value)"/>
+        </div>
+      </div>
+
+      <hr/>
+      <p class="section-title">Theme Colours</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Accent / Gold Colour</label>
+          <div class="color-row">
+            <input type="color" id="pg-color-accent-pick" value="#e8a96a" oninput="syncColor('accent',this.value)"/>
+            <input type="text" id="pg-color-accent" value="#e8a96a" placeholder="#e8a96a" oninput="syncColorFromText('accent',this.value)"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Background Colour</label>
+          <div class="color-row">
+            <input type="color" id="pg-color-bg-pick" value="#09080f" oninput="syncColor('bg',this.value)"/>
+            <input type="text" id="pg-color-bg" value="#09080f" placeholder="#09080f" oninput="syncColorFromText('bg',this.value)"/>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      <p class="section-title">Social / Meta</p>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>OG / Share Description</label>
+          <input type="text" id="pg-ogdesc" placeholder="A love letter in music, made just for you." oninput="updatePage('ogDesc',this.value)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPORT -->
+  <div id="tab-export" class="tab-content">
+    <div class="export-wrap">
+      <div class="export-title">Export content.json</div>
+      <p class="export-desc">
+        Copy or download this JSON and save as <code>content.json</code> in the same folder as <code>index.html</code>.
+        The main site loads it automatically on startup. <strong>Note:</strong> uploaded audio is stored as base64 — the file will be large if you have many songs.
+      </p>
+      <div class="json-preview" id="json-preview"></div>
+      <div class="export-actions">
+        <button class="btn btn-primary" onclick="downloadJSON()">⬇ Download content.json</button>
+        <button class="btn btn-ghost" onclick="copyJSON()">Copy to Clipboard</button>
+        <button class="btn btn-ghost" onclick="resetData()">↺ Reset to Defaults</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================
+   ADMIN ENGINE
+   ============================================ */
+
+let data = { songs: [], slides: [], endCard: {}, page: {} };
+
+async function loadData() {
+  const saved = localStorage.getItem('forHerAdmin');
+  if (saved) {
+    try { data = JSON.parse(saved); } catch { data = getDefaultData(); }
+  } else {
+    try {
+      const res = await fetch('content.json');
+      if (!res.ok) throw new Error();
+      data = await res.json();
+    } catch { data = getDefaultData(); }
+  }
+  if (!data.page) data.page = {};
+  renderAll();
+}
+
+function save() {
+  localStorage.setItem('forHerAdmin', JSON.stringify(data));
+}
+
+function renderAll() {
+  renderSlides();
+  renderSongs();
+  renderEndCard();
+  renderPageEditor();
+  updateStats();
+}
+
+function updateStats() {
+  document.getElementById('stat-slides').textContent = data.slides.length;
+  const totalMs = (data.slides||[]).reduce((s,sl) => s+(sl.dur||9000), 0);
+  const mins = Math.floor(totalMs/60000);
+  const secs = Math.round((totalMs%60000)/1000);
+  document.getElementById('stat-dur').textContent = `${mins}m ${secs}s`;
+  const usedSongs = new Set((data.slides||[]).map(s=>s.song||0));
+  document.getElementById('stat-songs').textContent = usedSongs.size;
+}
+
+/* ============================================
+   SLIDES
+   ============================================ */
+function renderSlides() {
+  const list = document.getElementById('slides-list');
+  list.innerHTML = '';
+  (data.slides||[]).forEach((s,i) => {
+    const card = document.createElement('div');
+    card.className = 'slide-card';
+    card.dataset.index = i;
+    const songObj = data.songs[s.song];
+    const songTitle = songObj ? (songObj.title || `Song ${(s.song||0)+1}`).split(' — ')[0] : `Song ${(s.song||0)+1}`;
+    const firstLine = (s.lines && s.lines[0] && s.lines[0].text) ? s.lines[0].text : 'Slide';
+
+    card.innerHTML = `
+      <div class="slide-card-header" onclick="toggleCard(this)">
+        <span class="drag-handle" title="Drag to reorder">⠿</span>
+        <div class="slide-num">${i+1}</div>
+        <div class="slide-card-title">${escHtml(truncate(firstLine,42))}</div>
+        <div class="slide-card-meta">${(s.dur||9000)/1000|0}s &nbsp;·&nbsp; ${escHtml(songTitle)}</div>
+        <div class="slide-toggle">▾</div>
+      </div>
+      <div class="slide-card-body">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Background Image URL or Upload</label>
+            <div class="upload-row">
+              <input type="url" id="img-url-${i}" placeholder="https://images.unsplash.com/..."
+                value="${escAttr(s.img||s.image||'')}"
+                oninput="updateSlide(${i},'img',this.value);previewImg(${i},this.value)"/>
+              <label class="upload-label" for="img-file-${i}">↑ Upload</label>
+              <input class="file-input" type="file" id="img-file-${i}" accept="image/*" onchange="handleImgUpload(${i},this)"/>
+            </div>
+            <img id="img-prev-${i}" class="img-preview"
+              src="${escAttr(s.img||s.image||'')}"
+              onerror="this.classList.remove('show')"
+              onload="this.classList.add('show')" alt=""/>
+          </div>
+
+          <div class="form-group">
+            <label>Text Position</label>
+            <select onchange="updateSlide(${i},'pos',this.value)">
+              ${['pos-bc','pos-bl','pos-br','pos-mc','pos-ml','pos-tc','pos-tr','pos-fc'].map(v=>
+                `<option value="${v}" ${(s.pos||'pos-bc')===v?'selected':''}>${v.replace('pos-','').toUpperCase()}</option>`
+              ).join('')}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Ken Burns Motion</label>
+            <select onchange="updateSlide(${i},'kenBurns',this.value)">
+              ${[['zoom-in','Zoom In'],['zoom-out','Zoom Out'],['pan-right','Pan Right'],['pan-left','Pan Left'],['drift-up','Drift Up'],['drift-down','Drift Down']].map(([v,l])=>
+                `<option value="${v}" ${(s.kenBurns||'zoom-in')===v?'selected':''}>${l}</option>`
+              ).join('')}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Music Track</label>
+            <select onchange="updateSlide(${i},'song',+this.value)">
+              ${(data.songs||[]).map((sg,si)=>
+                `<option value="${si}" ${(s.song||0)===si?'selected':''}>${si+1}. ${escHtml(sg.title||'Song '+(si+1))}</option>`
+              ).join('')}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Duration (ms)</label>
+            <input type="number" min="3000" max="30000" step="500"
+              value="${s.dur||9000}" onchange="updateSlide(${i},'dur',+this.value)"/>
+          </div>
+
+          <div class="form-group">
+            <label>Chapter Label (optional)</label>
+            <input type="text" value="${escAttr(s.chapter||'')}" placeholder="e.g. Kasoor"
+              oninput="updateSlide(${i},'chapter',this.value)"/>
+          </div>
+
+          <div class="form-group">
+            <label>Tint Overlay</label>
+            <input type="text" value="${escAttr(s.tint||'rgba(0,0,0,0.26)')}"
+              onchange="updateSlide(${i},'tint',this.value)" placeholder="rgba(r,g,b,a)"/>
+          </div>
+
+          <div class="form-group full">
+            <label>Lyric Lines</label>
+            <div class="lines-editor" id="lines-editor-${i}">
+              ${renderLineRows(i, s.lines||[])}
+            </div>
+            <button class="add-line-btn" onclick="addLine(${i})">+ Add Line</button>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="btn btn-danger" onclick="deleteSlide(${i})">Delete</button>
+          ${i>0?`<button class="btn btn-ghost" style="padding:6px 14px;font-size:9px" onclick="moveSlide(${i},-1)">↑ Up</button>`:''}
+          ${i<(data.slides.length-1)?`<button class="btn btn-ghost" style="padding:6px 14px;font-size:9px" onclick="moveSlide(${i},1)">↓ Down</button>`:''}
+          <button class="btn btn-ghost" style="padding:6px 14px;font-size:9px" onclick="duplicateSlide(${i})">⧉ Duplicate</button>
+        </div>
+      </div>`;
+    list.appendChild(card);
+  });
+  updateStats();
+}
+
+function renderLineRows(slideIdx, lines) {
+  const colors = ['(default)','gold','rose','blue','dim'];
+  const sizes  = ['(normal)','hero','big','med','sm','xs'];
+  const delays = [0,1,2,3,4,5];
+  return lines.map((ln, li) => `
+    <div class="line-row" id="line-row-${slideIdx}-${li}">
+      <input type="text" value="${escAttr(ln.text||'')}"
+        oninput="updateLine(${slideIdx},${li},'text',this.value)"
+        placeholder="Lyric text…"/>
+      <select onchange="updateLine(${slideIdx},${li},'color',this.value)" title="Color">
+        ${colors.map(c=>c==='(default)'
+          ? `<option value="" ${!(ln.color)?'selected':''}>color</option>`
+          : `<option value="${c}" ${(ln.color||'')===c?'selected':''}>${c}</option>`
+        ).join('')}
+      </select>
+      <select onchange="updateLine(${slideIdx},${li},'size',this.value)" title="Size">
+        ${sizes.map(sz=>sz==='(normal)'
+          ? `<option value="" ${!(ln.size)?'selected':''}>size</option>`
+          : `<option value="${sz}" ${(ln.size||'')===sz?'selected':''}>${sz}</option>`
+        ).join('')}
+      </select>
+      <select onchange="updateLine(${slideIdx},${li},'delay',this.value)" title="Delay">
+        ${delays.map(d=>`<option value="${d}" ${(ln.delay||1)==d?'selected':''}>d${d}</option>`).join('')}
+      </select>
+      <button class="del-line" onclick="deleteLine(${slideIdx},${li})" title="Remove line">×</button>
+    </div>`).join('');
+}
+
+function updateSlide(i, key, val) {
+  data.slides[i][key] = val;
+  save();
+  if (key==='song') renderSlides();
+  if (key==='dur') updateStats();
+}
+
+function updateLine(slideIdx, lineIdx, key, val) {
+  if (!data.slides[slideIdx].lines) data.slides[slideIdx].lines = [];
+  if (!data.slides[slideIdx].lines[lineIdx]) data.slides[slideIdx].lines[lineIdx] = {};
+  data.slides[slideIdx].lines[lineIdx][key] = val;
+  save();
+}
+
+function addLine(slideIdx) {
+  if (!data.slides[slideIdx].lines) data.slides[slideIdx].lines = [];
+  data.slides[slideIdx].lines.push({ text:'', delay: Math.min(data.slides[slideIdx].lines.length+1, 5) });
+  save(); renderSlides();
+  setTimeout(() => {
+    const c = document.querySelector(`[data-index="${slideIdx}"]`);
+    if (c) c.classList.add('open');
+  }, 10);
+}
+
+function deleteLine(slideIdx, lineIdx) {
+  data.slides[slideIdx].lines.splice(lineIdx, 1);
+  save(); renderSlides();
+  setTimeout(() => {
+    const c = document.querySelector(`[data-index="${slideIdx}"]`);
+    if (c) c.classList.add('open');
+  }, 10);
+}
+
+function addSlide() {
+  data.slides.push({
+    img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=85',
+    tint:'rgba(5,5,20,0.32)', kenBurns:'zoom-in',
+    pos:'pos-bc', song:0, dur:9000,
+    lines:[{ text:'Write something beautiful.', delay:1, color:'gold' }]
+  });
+  save(); renderSlides();
+  toast('Slide added ✓');
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.slide-card');
+    const last = cards[cards.length-1];
+    if (last) { last.classList.add('open'); last.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  }, 60);
+}
+
+function deleteSlide(i) {
+  if (!confirm(`Delete slide ${i+1}?`)) return;
+  data.slides.splice(i, 1);
+  save(); renderSlides(); toast('Slide deleted');
+}
+
+function moveSlide(i, dir) {
+  const j = i+dir;
+  if (j<0 || j>=data.slides.length) return;
+  [data.slides[i], data.slides[j]] = [data.slides[j], data.slides[i]];
+  save(); renderSlides(); toast(`Moved ${dir>0?'down':'up'}`);
+}
+
+function duplicateSlide(i) {
+  const copy = JSON.parse(JSON.stringify(data.slides[i]));
+  data.slides.splice(i+1, 0, copy);
+  save(); renderSlides(); toast('Duplicated ✓');
+}
+
+function handleImgUpload(slideIdx, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    data.slides[slideIdx].img = dataUrl;
+    save();
+    const urlInput = document.getElementById(`img-url-${slideIdx}`);
+    if (urlInput) urlInput.value = file.name + ' (uploaded)';
+    previewImg(slideIdx, dataUrl);
+    toast('Image uploaded ✓');
+  };
+  reader.readAsDataURL(file);
+}
+
+function previewImg(slideIdx, src) {
+  const prev = document.getElementById(`img-prev-${slideIdx}`);
+  if (!prev) return;
+  if (src && src.length > 5) { prev.src = src; prev.classList.add('show'); }
+  else prev.classList.remove('show');
+}
+
+/* ============================================
+   SONGS — LOCAL FILE UPLOAD
+   ============================================ */
+function renderSongs() {
+  const list = document.getElementById('songs-list');
+  list.innerHTML = '';
+  (data.songs||[]).forEach((s, i) => {
+    const hasAudio = !!(s.audioData || s.audioUrl);
+    const card = document.createElement('div');
+    card.className = 'song-card';
+    card.innerHTML = `
+      <div class="song-header">
+        <div class="song-num">${i+1}</div>
+        <div class="song-label">${escHtml(s.title||'Song '+(i+1))}</div>
+        <div class="song-idx">Index ${i}</div>
+        <button class="btn btn-danger" onclick="deleteSong(${i})">Remove</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Song Title (shown in end card &amp; player)</label>
+          <input type="text" value="${escAttr(s.title||'')}" placeholder="Song — Artist"
+            oninput="updateSong(${i},'title',this.value)"/>
+        </div>
+
+        <div class="form-group full">
+          <label>Audio File — Upload from device</label>
+          <div class="audio-upload-row">
+            <input type="text" id="audio-name-${i}" readonly
+              value="${escAttr(s.fileName||'')}"
+              placeholder="No file selected — click Upload to choose an audio file"/>
+            <label class="audio-upload-label" for="audio-file-${i}">
+              ♪ Upload Audio
+            </label>
+            <input class="file-input" type="file" id="audio-file-${i}"
+              accept="audio/*,.mp3,.wav,.ogg,.aac,.flac,.m4a"
+              onchange="handleAudioUpload(${i},this)"/>
+          </div>
+          <div id="audio-player-wrap-${i}">
+            ${hasAudio ? renderAudioPlayer(i, s) : `<div style="margin-top:8px;" class="hint">No audio uploaded yet. Upload an MP3, WAV, OGG, or other audio file.</div>`}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Start At (seconds)</label>
+          <input type="number" min="0" max="600" value="${s.start||0}"
+            onchange="updateSong(${i},'start',+this.value)" placeholder="0"/>
+        </div>
+
+        <div class="form-group">
+          <label>Volume (0.0 – 1.0)</label>
+          <input type="number" min="0" max="1" step="0.05" value="${s.volume!=null?s.volume:0.85}"
+            onchange="updateSong(${i},'volume',+this.value)" placeholder="0.85"/>
+        </div>
+
+        <div class="form-group">
+          <label>Fade In (ms)</label>
+          <input type="number" min="0" max="5000" step="100" value="${s.fadeIn||800}"
+            onchange="updateSong(${i},'fadeIn',+this.value)" placeholder="800"/>
+        </div>
+
+        <div class="form-group">
+          <label>Fade Out (ms)</label>
+          <input type="number" min="0" max="5000" step="100" value="${s.fadeOut||1200}"
+            onchange="updateSong(${i},'fadeOut',+this.value)" placeholder="1200"/>
+        </div>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function renderAudioPlayer(i, s) {
+  const src = s.audioData || s.audioUrl || '';
+  const type = s.audioType || 'audio/mpeg';
+  return `
+    <div class="audio-player-mini">
+      <audio controls preload="metadata">
+        <source src="${escAttr(src)}" type="${escAttr(type)}">
+      </audio>
+      <span class="audio-badge">${escHtml(s.fileName||'Uploaded')}</span>
+      <button class="btn btn-danger" style="padding:5px 10px;font-size:9px" onclick="clearAudio(${i})">✕ Remove</button>
+    </div>`;
+}
+
+function handleAudioUpload(songIdx, input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const maxMB = 20;
+  if (file.size > maxMB * 1024 * 1024) {
+    toast(`File too large — max ${maxMB}MB`);
+    return;
+  }
+
+  toast('Reading audio file…');
+  const reader = new FileReader();
+  reader.onload = e => {
+    data.songs[songIdx].audioData = e.target.result;
+    data.songs[songIdx].audioType = file.type || 'audio/mpeg';
+    data.songs[songIdx].fileName  = file.name;
+    // If title is still default, auto-fill from filename
+    const defaultTitle = `Song — Artist`;
+    if (!data.songs[songIdx].title || data.songs[songIdx].title === defaultTitle) {
+      const nameNoExt = file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+      data.songs[songIdx].title = nameNoExt;
+    }
+    save();
+    renderSongs();
+    toast(`Uploaded: ${file.name} ✓`);
+  };
+  reader.onerror = () => toast('Error reading file');
+  reader.readAsDataURL(file);
+}
+
+function clearAudio(songIdx) {
+  if (!confirm('Remove audio from this song?')) return;
+  delete data.songs[songIdx].audioData;
+  delete data.songs[songIdx].audioUrl;
+  delete data.songs[songIdx].audioType;
+  delete data.songs[songIdx].fileName;
+  save(); renderSongs(); toast('Audio removed');
+}
+
+function updateSong(i, key, val) {
+  data.songs[i][key] = val;
+  save();
+  if (key==='title') renderSlides();
+}
+
+function addSong() {
+  data.songs.push({ title:'New Song — Artist', start:0, volume:0.85, fadeIn:800, fadeOut:1200 });
+  save(); renderSongs(); renderSlides(); toast('Song added — upload an audio file ↑');
+}
+
+function deleteSong(i) {
+  if (!confirm(`Remove Song ${i+1}? Slides pointing to it will clamp to Song 0.`)) return;
+  data.songs.splice(i, 1);
+  data.slides.forEach(sl => { if (sl.song >= data.songs.length) sl.song = Math.max(0, data.songs.length-1); });
+  save(); renderSongs(); renderSlides(); toast('Song removed');
+}
+
+/* ============================================
+   END CARD
+   ============================================ */
+function renderEndCard() {
+  const ec = data.endCard || {};
+  setValue('ec-pre',   ec.pre   || '');
+  setValue('ec-title', ec.title || '');
+  setValue('ec-sub',   ec.sub   || '');
+  setValue('ec-msg',   ec.msg   || '');
+  setPreview(ec);
+}
+
+function setPreview(ec) {
+  setElText('prev-pre',   ec.pre   || 'With love, always');
+  setElText('prev-title', ec.title || 'Happy Birthday.');
+  setElText('prev-sub',   ec.sub   || 'You deserve the whole world.');
+  setElText('prev-msg',   (ec.msg  || 'Every song, every frame — made only for you.').replace(/\\n/g,'\n'));
+}
+
+function updateEndCard(key, val) {
+  if (!data.endCard) data.endCard = {};
+  data.endCard[key] = val;
+  save();
+  setPreview(data.endCard);
+}
+
+/* ============================================
+   PAGE EDITOR
+   ============================================ */
+function renderPageEditor() {
+  const pg = data.page || {};
+  setValue('pg-eyebrow',  pg.eyebrow  || '');
+  setValue('pg-title',    pg.title    || '');
+  setValue('pg-sub',      pg.sub      || '');
+  setValue('pg-btn',      pg.btn      || '');
+  setValue('pg-desc',     pg.desc     || '');
+  setValue('pg-footnote', pg.footnote || '');
+  setValue('pg-tabtitle', pg.tabTitle || '');
+  setValue('pg-name',     pg.name     || '');
+  setValue('pg-ogdesc',   pg.ogDesc   || '');
+  setValue('pg-color-accent', pg.colorAccent || '#e8a96a');
+  setValue('pg-color-bg',     pg.colorBg     || '#09080f');
+  const ap = document.getElementById('pg-color-accent-pick');
+  const bp = document.getElementById('pg-color-bg-pick');
+  if (ap) ap.value = pg.colorAccent || '#e8a96a';
+  if (bp) bp.value = pg.colorBg     || '#09080f';
+  refreshMockPreview();
+}
+
+function updatePage(key, val) {
+  if (!data.page) data.page = {};
+  data.page[key] = val;
+  save();
+  refreshMockPreview();
+}
+
+function refreshMockPreview() {
+  const pg = data.page || {};
+  setElText('mock-eyebrow', pg.eyebrow  || 'A Gift in Sound & Vision');
+  setElText('mock-title',   pg.title    || 'For Her.');
+  setElText('mock-sub',     pg.sub      || 'A love letter in music');
+  setElText('mock-desc',    pg.desc     || 'Every song chosen with intention. Every frame made only for you. Press play and let the feeling find you.');
+  setElText('mock-btn',     pg.btn      || 'Begin');
+  setElText('mock-footnote',pg.footnote || 'Headphones on. Lights low.');
+}
+
+function syncColor(key, val) {
+  const textKey = key === 'accent' ? 'pg-color-accent' : 'pg-color-bg';
+  const dataKey = key === 'accent' ? 'colorAccent' : 'colorBg';
+  setValue(textKey, val);
+  updatePage(dataKey, val);
+}
+
+function syncColorFromText(key, val) {
+  const pickKey = key === 'accent' ? 'pg-color-accent-pick' : 'pg-color-bg-pick';
+  const dataKey = key === 'accent' ? 'colorAccent' : 'colorBg';
+  if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+    const el = document.getElementById(pickKey);
+    if (el) el.value = val;
+  }
+  updatePage(dataKey, val);
+}
+
+/* ============================================
+   EXPORT
+   ============================================ */
+function getJSON() { return JSON.stringify(data, null, 2); }
+
+function renderJSONPreview() {
+  // Show truncated preview (base64 audio can be huge)
+  const clone = JSON.parse(JSON.stringify(data));
+  (clone.songs||[]).forEach(s => {
+    if (s.audioData && s.audioData.length > 200) {
+      s.audioData = s.audioData.substring(0, 60) + `…[base64 ${Math.round(s.audioData.length/1024)}KB]`;
+    }
+  });
+  document.getElementById('json-preview').textContent = JSON.stringify(clone, null, 2);
+}
+
+function downloadJSON() {
+  const blob = new Blob([getJSON()], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'content.json';
+  a.click();
+  toast('Downloaded content.json ✓');
+}
+
+function copyJSON() {
+  navigator.clipboard.writeText(getJSON())
+    .then(() => toast('Copied to clipboard ✓'))
+    .catch(() => toast('Copy failed — select manually'));
+}
+
+function resetData() {
+  if (!confirm('Reset everything to defaults? This cannot be undone.')) return;
+  localStorage.removeItem('forHerAdmin');
+  data = getDefaultData();
+  save(); renderAll(); toast('Reset to defaults');
+}
+
+function goExport() {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab')[4].classList.add('active');
+  document.getElementById('tab-export').classList.add('active');
+  renderJSONPreview();
+}
+
+/* ============================================
+   UI HELPERS
+   ============================================ */
+function toggleCard(header) { header.parentElement.classList.toggle('open'); }
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if (name==='export') renderJSONPreview();
+}
+
+function previewSite() { window.open('index.html','_blank'); }
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s) { return String(s).replace(/"/g,'&quot;'); }
+function truncate(s,n) { return s.length>n ? s.slice(0,n)+'…' : s; }
+function setValue(id, val) { const el = document.getElementById(id); if (el) el.value = val; }
+function setElText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+
+/* ============================================
+   DEFAULTS (no audio — users upload their own)
+   ============================================ */
+function getDefaultData() {
+  return {
+    songs:[
+      { title:"Kasoor — Prateek Kuhad",      start:30, volume:0.85, fadeIn:800,  fadeOut:1200 },
+      { title:"Baarishein — Atif Aslam",      start:15, volume:0.85, fadeIn:800,  fadeOut:1200 },
+      { title:"Tum Hi Ho — Arijit Singh",     start:10, volume:0.85, fadeIn:800,  fadeOut:1200 },
+      { title:"Tera Yaar Hoon Main — Arijit", start:12, volume:0.85, fadeIn:800,  fadeOut:1200 },
+      { title:"Khairiyat — Arijit Singh",     start:18, volume:0.85, fadeIn:1000, fadeOut:1200 }
+    ],
+    slides:[
+      {img:"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1600&q=85",tint:"rgba(40,20,8,0.32)",kenBurns:"zoom-in",pos:"pos-bc",song:0,dur:9000,lines:[{text:"There are people you meet",delay:1},{text:"and the world quietly shifts.",delay:2,color:"gold"}]},
+      {img:"https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&q=85",tint:"rgba(30,12,5,0.3)",kenBurns:"pan-right",pos:"pos-bl",song:0,dur:9000,lines:[{text:"She was one of them.",delay:1,size:"big",color:"gold"}]},
+      {img:"https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1600&q=85",tint:"rgba(20,10,20,0.28)",kenBurns:"zoom-out",pos:"pos-mc",song:0,dur:10000,lines:[{text:"Kuch toh tha,",delay:1,color:"gold"},{text:"jo aankhon ne bola,",delay:2},{text:"jo lafzon ne nahi.",delay:3,color:"rose"}]},
+      {img:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1600&q=85",tint:"rgba(30,10,5,0.28)",kenBurns:"drift-up",pos:"pos-bc",song:0,dur:9000,lines:[{text:"Kasoor tera nahi.",delay:1,size:"big",color:"gold"},{text:"Aur mera bhi nahi.",delay:2}]},
+      {img:"https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=1600&q=85",tint:"rgba(5,15,32,0.38)",kenBurns:"zoom-in",pos:"pos-bc",song:1,dur:9500,lines:[{text:"Baarish jab bhi ho —",delay:1,color:"blue"},{text:"teri yaad aati hai.",delay:2}]},
+      {img:"https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=1600&q=85",tint:"rgba(5,18,35,0.35)",kenBurns:"drift-up",pos:"pos-ml",song:1,dur:9000,lines:[{text:"Some feelings",delay:1},{text:"don't have names.",delay:2,size:"big"},{text:"They just live.",delay:3,color:"blue"}]},
+      {img:"https://images.unsplash.com/photo-1473621038790-b778b4750efe?w=1600&q=85",tint:"rgba(8,12,30,0.38)",kenBurns:"pan-right",pos:"pos-tc",song:1,dur:9500,lines:[{text:"Jo dil mein tha —",delay:1},{text:"woh kabhi keh nahi paaye.",delay:2,color:"rose"}]},
+      {img:"https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=85",tint:"rgba(30,8,5,0.28)",kenBurns:"zoom-in",pos:"pos-mc",song:2,dur:10000,lines:[{text:"Tum hi ho.",delay:1,size:"big",color:"gold"}]},
+      {img:"https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1600&q=85",tint:"rgba(22,8,5,0.28)",kenBurns:"pan-left",pos:"pos-bl",song:2,dur:9000,lines:[{text:"Har ek lamhe mein,",delay:1},{text:"sirf tum.",delay:2,size:"big",color:"gold"}]},
+      {img:"https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=1600&q=85",tint:"rgba(18,6,4,0.3)",kenBurns:"drift-up",pos:"pos-tc",song:2,dur:9500,lines:[{text:"There is something rare",delay:1},{text:"about a person who makes",delay:2},{text:"the world feel like home.",delay:3,color:"gold"}]},
+      {img:"https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&q=85",tint:"rgba(28,15,0,0.25)",kenBurns:"zoom-out",pos:"pos-tc",song:3,dur:9000,lines:[{text:"Tera yaar hoon main.",delay:1,size:"big",color:"gold"},{text:"Sada ke liye.",delay:2}]},
+      {img:"https://images.unsplash.com/photo-1524117074681-31bd4de22ad3?w=1600&q=85",tint:"rgba(30,18,0,0.26)",kenBurns:"pan-right",pos:"pos-bl",song:3,dur:9000,lines:[{text:"The laughs that made",delay:1},{text:"everything okay.",delay:2,color:"gold"}]},
+      {img:"https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=1600&q=85",tint:"rgba(22,12,0,0.26)",kenBurns:"pan-left",pos:"pos-mc",song:3,dur:9500,lines:[{text:"Woh waqt,",delay:1},{text:"jo kabhi lautega nahi —",delay:2},{text:"par dil mein hai.",delay:3,color:"gold"}]},
+      {img:"https://images.unsplash.com/photo-1500622944204-b135684e99fd?w=1600&q=85",tint:"rgba(5,5,22,0.33)",kenBurns:"drift-up",pos:"pos-bc",song:4,dur:9500,lines:[{text:"Khairiyat pooch,",delay:1,color:"blue"},{text:"kabhi toh khairiyat pooch.",delay:2}]},
+      {img:"https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=1600&q=85",tint:"rgba(8,5,20,0.35)",kenBurns:"zoom-in",pos:"pos-bc",song:4,dur:10000,lines:[{text:"And today —",delay:1},{text:"on your birthday,",delay:2,size:"big",color:"gold"},{text:"I just want you to feel it all.",delay:3}]},
+      {img:"https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=85",tint:"rgba(5,0,18,0.35)",kenBurns:"zoom-out",pos:"pos-mc",song:4,dur:13000,lines:[{text:"Happy Birthday.",delay:1,size:"big",color:"gold"},{text:"You deserve every beautiful thing.",delay:2},{text:"Every single one.",delay:3,color:"rose"}]}
+    ],
+    endCard:{
+      pre:"With love, always",
+      title:"Happy Birthday.",
+      sub:"You deserve the whole world.",
+      msg:"Every song, every frame —\nmade only for you."
+    },
+    page:{
+      eyebrow:"A Gift in Sound & Vision",
+      title:"For Her.",
+      sub:"A love letter in music",
+      desc:"Every song chosen with intention. Every frame made only for you. Press play and let the feeling find you.",
+      btn:"Begin",
+      footnote:"Headphones on. Lights low.",
+      tabTitle:"For Her",
+      name:"Her",
+      colorAccent:"#e8a96a",
+      colorBg:"#09080f",
+      ogDesc:"A love letter in music, made just for you."
+    }
+  };
+}
+
+/* INIT */
+loadData();
+</script>
+</body>
+</html>
