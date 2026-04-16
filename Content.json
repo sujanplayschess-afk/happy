@@ -1,0 +1,113 @@
+{
+  "scenes": [
+    {
+      "id": 1,
+      "title": "Childhood",
+      "lines": [
+        "Before the world had a name for her…",
+        "she was already learning how to hold light."
+      ],
+      "image": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1920&q=80",
+      "duration": 15,
+      "overlay": "rgba(10,5,0,0.45)",
+      "kenBurns": "zoom-in"
+    },
+    {
+      "id": 2,
+      "title": "Growing Up",
+      "lines": [
+        "Somewhere between then and now,",
+        "she stopped being a child — quietly, gracefully."
+      ],
+      "image": "https://images.unsplash.com/photo-1504203700686-f21e703e5f1c?w=1920&q=80",
+      "duration": 15,
+      "overlay": "rgba(5,10,20,0.5)",
+      "kenBurns": "zoom-out"
+    },
+    {
+      "id": 3,
+      "title": "Personality",
+      "lines": [
+        "She doesn't ask for attention.",
+        "She just walks in — and the room shifts."
+      ],
+      "image": "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=1920&q=80",
+      "duration": 15,
+      "overlay": "rgba(0,10,15,0.5)",
+      "kenBurns": "pan-right"
+    },
+    {
+      "id": 4,
+      "title": "Shared Memories",
+      "lines": [
+        "Some moments don't need photographs.",
+        "They live in the pause between words."
+      ],
+      "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+      "duration": 20,
+      "overlay": "rgba(5,5,15,0.55)",
+      "kenBurns": "pan-left"
+    },
+    {
+      "id": 5,
+      "title": "Distance",
+      "lines": [
+        "Things change.",
+        "And yet, some people stay — in their own quiet way."
+      ],
+      "image": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80",
+      "duration": 20,
+      "overlay": "rgba(0,0,5,0.6)",
+      "kenBurns": "zoom-in"
+    },
+    {
+      "id": 6,
+      "title": "Present",
+      "lines": [
+        "Today, on your birthday —",
+        "this is for you. Just you."
+      ],
+      "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
+      "duration": 20,
+      "overlay": "rgba(5,0,10,0.5)",
+      "kenBurns": "zoom-out"
+    }
+  ],
+  "music": [
+    {
+      "id": 1,
+      "label": "Intro Instrumental",
+      "url": "https://cdn.pixabay.com/download/audio/2022/03/10/audio_270f29b742.mp3",
+      "startAt": 0,
+      "volume": 0.6
+    },
+    {
+      "id": 2,
+      "label": "Hindi Nostalgic",
+      "url": "https://cdn.pixabay.com/download/audio/2023/06/19/audio_8b0c2a0b2f.mp3",
+      "startAt": 15,
+      "volume": 0.7
+    },
+    {
+      "id": 3,
+      "label": "Hindi Emotional",
+      "url": "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3",
+      "startAt": 35,
+      "volume": 0.65
+    },
+    {
+      "id": 4,
+      "label": "English Reflective",
+      "url": "https://cdn.pixabay.com/download/audio/2021/11/25/audio_cb31e1e7b2.mp3",
+      "startAt": 55,
+      "volume": 0.6
+    },
+    {
+      "id": 5,
+      "label": "Soft Closure",
+      "url": "https://cdn.pixabay.com/download/audio/2022/08/02/audio_884fe92c21.mp3",
+      "startAt": 75,
+      "volume": 0.5
+    }
+  ]
+}
