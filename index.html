@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title id="page-title">For Her — A Music Video</title>
+<title>For Her — A Music Video</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,300;1,400&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet"/>
@@ -90,6 +89,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);font-fami
 .pos-tl{top:15%;left:6%;text-align:left;}
 .pos-tc{top:15%;left:50%;transform:translateX(-50%);text-align:center;}
 .pos-tr{top:15%;right:6%;text-align:right;}
+
 .ll{display:block;font-family:var(--fh);font-style:italic;font-weight:300;
   font-size:clamp(1.5rem,3.3vw,2.9rem);line-height:1.42;color:var(--warm);
   text-shadow:0 3px 40px rgba(0,0,0,.92),0 1px 8px rgba(0,0,0,.8);
@@ -122,15 +122,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);font-fami
 #ec.on .rbtn{animation:fadeIn .8s 3.2s forwards;}
 .rbtn:hover{border-color:var(--amber);color:var(--amber);}
 
-/* LOADING */
-#loader{position:fixed;inset:0;z-index:6000;background:var(--ink);display:flex;align-items:center;justify-content:center;transition:opacity .8s ease,visibility .8s ease;}
-#loader.gone{opacity:0;visibility:hidden;pointer-events:none;}
-.loader-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);margin:0 4px;animation:ldot 1.2s ease-in-out infinite;}
-.loader-dot:nth-child(1){animation-delay:0s}
-.loader-dot:nth-child(2){animation-delay:.2s}
-.loader-dot:nth-child(3){animation-delay:.4s}
-@keyframes ldot{0%,80%,100%{transform:scale(0.4);opacity:.3}40%{transform:scale(1);opacity:1}}
-
 /* KEYFRAMES */
 @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -146,23 +137,16 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);font-fami
 </head>
 <body>
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="loader-dot"></div>
-  <div class="loader-dot"></div>
-  <div class="loader-dot"></div>
-</div>
-
 <div id="grain"></div>
 <div id="vig"></div>
 
 <!-- INTRO -->
 <div id="intro">
-  <span class="i-pre" id="intro-pre">A story in music &amp; light</span>
-  <h1 class="i-title" id="intro-title">For <em id="intro-em">Her</em></h1>
+  <span class="i-pre">A story in music &amp; light</span>
+  <h1 class="i-title">For <em>Her</em></h1>
   <div class="i-rule"></div>
-  <p class="i-sub" id="intro-sub">Kasoor &nbsp;·&nbsp; Baarishein &nbsp;·&nbsp; and more</p>
-  <button class="pbtn" id="playBtn"><span class="ptri"></span><span id="play-label">Play</span></button>
+  <p class="i-sub">Kasoor &nbsp;·&nbsp; Baarishein &nbsp;·&nbsp; and more</p>
+  <button class="pbtn" id="playBtn"><span class="ptri"></span>Play</button>
 </div>
 
 <!-- PROGRESS -->
@@ -185,346 +169,281 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);font-fami
 
 <!-- END CARD -->
 <div id="ec">
-  <span class="e-pre" id="ec-pre">With everything</span>
-  <p class="e-msg" id="ec-msg">Happy Birthday.</p>
-  <p class="e-sub" id="ec-sub">Always yours to keep.</p>
+  <span class="e-pre">With everything</span>
+  <p class="e-msg">Happy Birthday.</p>
+  <p class="e-sub">Always yours to keep.</p>
   <div class="e-rule"></div>
-  <p class="e-note" id="ec-note">Kasoor · Baarishein · Tum Hi Ho · Tera Yaar Hoon Main · Khairiyat</p>
-  <button class="rbtn" id="replayBtn">Watch Again</button>
+  <p class="e-note">Kasoor · Baarishein · Tum Hi Ho · Tera Yaar Hoon Main · Khairiyat</p>
+  <button class="rbtn" onclick="replay()">Watch Again</button>
 </div>
 
-<!-- HIDDEN YT CONTAINER -->
-<div id="ytc" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;pointer-events:none;"></div>
-
-<!-- LOCAL AUDIO ELEMENTS (populated dynamically) -->
-<div id="local-audio-container" style="display:none;"></div>
+<!-- HIDDEN YT -->
+<div id="ytc" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;"></div>
 
 <script>
-/* ═══════════════════════════════════════════════
-   DEFAULT DATA
-═══════════════════════════════════════════════ */
-const DEFAULT_SONGS = [
-  { title:"Kasoor — Prateek Kuhad",      ytId:"N3vQBQ3XPCY", start:30 },
-  { title:"Baarishein — Atif Aslam",     ytId:"ixrSQoJ57WM", start:15 },
-  { title:"Tum Hi Ho — Arijit Singh",    ytId:"Umqb9KENgmk", start:10 },
-  { title:"Tera Yaar Hoon Main — Arijit",ytId:"f0Z1dOOzN5E", start:12 },
-  { title:"Khairiyat — Arijit Singh",    ytId:"dBgtCsrR4xU", start:18 }
+/* ── SONGS ───────────────────────────────────────────────────── */
+const SONGS = [
+  { title:"Kasoor — Prateek Kuhad",         ytId:"N3vQBQ3XPCY", start:30 },
+  { title:"Baarishein — Atif Aslam",         ytId:"ixrSQoJ57WM", start:15 },
+  { title:"Tum Hi Ho — Arijit Singh",        ytId:"Umqb9KENgmk", start:10 },
+  { title:"Tera Yaar Hoon Main — Arijit",    ytId:"f0Z1dOOzN5E", start:12 },
+  { title:"Khairiyat — Arijit Singh",        ytId:"dBgtCsrR4xU", start:18 }
 ];
-const DEFAULT_END = {
-  pre:"With everything", title:"Happy Birthday.",
-  sub:"Always yours to keep.",
-  note:"Kasoor · Baarishein · Tum Hi Ho · Tera Yaar Hoon Main · Khairiyat",
-  replay:"Watch Again"
-};
-const DEFAULT_INTRO = {
-  pre:'A story in music & light', title:'For Her',
-  em:'Her', sub:'', play:'Play'
-};
 
-/* ═══════════════════════════════════════════════
-   ENGINE STATE
-═══════════════════════════════════════════════ */
-let SONGS  = [];
-let SLIDES = [];
-let cur       = -1;
-let stTimer   = null;
-let running   = false;
-let activeSng = -1;
-let pendingSng= -1;
-let ytPlrs    = {};
-let ytReady   = {};
-let ytOk      = false;
-let localAudios = {}; // index → <audio> element
+/* ── SLIDES ──────────────────────────────────────────────────── */
+/*
+  song: index into SONGS
+  dur:  ms this slide stays
+  pos:  css class for text placement
+  kb:   ken burns class
+  img:  Unsplash image URL
+  tint: colour overlay (mix-blend multiply)
+  lines: array of { text, cls }
+*/
+const SLIDES = [
 
-const $stage  = document.getElementById('stage');
-const $pb     = document.getElementById('pb');
-const $pw     = document.getElementById('pw');
-const $ctr    = document.getElementById('ctr');
-const $mbars  = document.getElementById('mbars');
-const $slbl   = document.getElementById('slbl');
-const $intro  = document.getElementById('intro');
-const $ec     = document.getElementById('ec');
-const $ytc    = document.getElementById('ytc');
-const $loader = document.getElementById('loader');
+  /* ═══════════════════════════════
+     KASOOR — longing, first feelings
+     ═══════════════════════════════ */
+  {
+    img:"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1600&q=85",
+    tint:"rgba(40,20,8,0.32)", kb:"kb-zi", pos:"pos-bc", song:0, dur:9000,
+    lines:[
+      {text:"There are people you meet",cls:"d1"},
+      {text:"and the world quietly shifts.",cls:"d2 gold"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&q=85",
+    tint:"rgba(30,12,5,0.3)", kb:"kb-pr", pos:"pos-bl", song:0, dur:9000,
+    lines:[
+      {text:"She was one of them.",cls:"d1 big gold"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?w=1600&q=85",
+    tint:"rgba(20,10,20,0.28)", kb:"kb-zo", pos:"pos-mc", song:0, dur:10000,
+    lines:[
+      {text:"Kuch toh tha,",cls:"d1 gold"},
+      {text:"jo aaँkhon ne bola,",cls:"d2"},
+      {text:"jo lafzon ne nahi.",cls:"d3 rose"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=1600&q=85",
+    tint:"rgba(10,5,25,0.3)", kb:"kb-pl", pos:"pos-tr", song:0, dur:9000,
+    lines:[
+      {text:"The kind of person",cls:"d1 sm"},
+      {text:"you remember",cls:"d2"},
+      {text:"on ordinary days.",cls:"d3 rose"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1600&q=85",
+    tint:"rgba(30,10,5,0.28)", kb:"kb-du", pos:"pos-bc", song:0, dur:9000,
+    lines:[
+      {text:"Kasoor tera nahi.",cls:"d1 big gold"},
+      {text:"Aur mera bhi nahi.",cls:"d2"}
+    ]
+  },
 
-/* ═══════════════════════════════════════════════
-   LOAD DATA
-═══════════════════════════════════════════════ */
-async function loadData() {
-  let data = null;
-  try {
-    const saved = localStorage.getItem('forHerAdmin');
-    if (saved) { data = JSON.parse(saved); }
-  } catch(e) {}
+  /* ═══════════════════════════════
+     BAARISHEIN — rain, emotion, depth
+     ═══════════════════════════════ */
+  {
+    img:"https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=1600&q=85",
+    tint:"rgba(5,15,32,0.38)", kb:"kb-zi", pos:"pos-bc", song:1, dur:9500,
+    lines:[
+      {text:"Baarish jab bhi ho —",cls:"d1 blue"},
+      {text:"teri yaad aati hai.",cls:"d2"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=1600&q=85",
+    tint:"rgba(5,18,35,0.35)", kb:"kb-du", pos:"pos-ml", song:1, dur:9000,
+    lines:[
+      {text:"Some feelings",cls:"d1 caps"},
+      {text:"don't have names.",cls:"d2 big"},
+      {text:"They just live.",cls:"d3 blue"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1473621038790-b778b4750efe?w=1600&q=85",
+    tint:"rgba(8,12,30,0.38)", kb:"kb-pr", pos:"pos-tc", song:1, dur:9500,
+    lines:[
+      {text:"Jo dil mein tha —",cls:"d1"},
+      {text:"woh kabhi keh nahi paaye.",cls:"d2 rose"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1600&q=85",
+    tint:"rgba(5,10,28,0.35)", kb:"kb-zo", pos:"pos-bc", song:1, dur:9000,
+    lines:[
+      {text:"And still —",cls:"d1 sm"},
+      {text:"she stayed.",cls:"d2 big blue"},
+      {text:"Like rain that never felt like sadness.",cls:"d3"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=85",
+    tint:"rgba(5,8,25,0.32)", kb:"kb-pl", pos:"pos-br", song:1, dur:9000,
+    lines:[
+      {text:"Baarishein thi,",cls:"d1 blue"},
+      {text:"aur tum bhi.",cls:"d2 gold"}
+    ]
+  },
 
-  if (!data) {
-    try {
-      const res = await fetch('content.json?' + Date.now());
-      if (res.ok) data = await res.json();
-    } catch(e) {}
+  /* ═══════════════════════════════
+     TUM HI HO — pure warmth, love
+     ═══════════════════════════════ */
+  {
+    img:"https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=85",
+    tint:"rgba(30,8,5,0.28)", kb:"kb-zi", pos:"pos-mc", song:2, dur:10000,
+    lines:[
+      {text:"Tum hi ho.",cls:"d1 big gold"},
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1600&q=85",
+    tint:"rgba(22,8,5,0.28)", kb:"kb-pl", pos:"pos-bl", song:2, dur:9000,
+    lines:[
+      {text:"Har ek lamhe mein,",cls:"d1"},
+      {text:"sirf tum.",cls:"d2 amber big"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=1600&q=85",
+    tint:"rgba(18,6,4,0.3)", kb:"kb-du", pos:"pos-tc", song:2, dur:9500,
+    lines:[
+      {text:"There is something rare",cls:"d1 sm"},
+      {text:"about a person who makes",cls:"d2"},
+      {text:"the world feel like home.",cls:"d3 gold"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1600&q=85",
+    tint:"rgba(25,8,4,0.28)", kb:"kb-pr", pos:"pos-bc", song:2, dur:9000,
+    lines:[
+      {text:"Ab tere bina kya nahi —",cls:"d1 rose"},
+      {text:"yeh dil jaanta hai.",cls:"d2"}
+    ]
+  },
+
+  /* ═══════════════════════════════
+     TERA YAAR HOON MAIN — friendship, joy
+     ═══════════════════════════════ */
+  {
+    img:"https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1600&q=85",
+    tint:"rgba(28,15,0,0.25)", kb:"kb-zo", pos:"pos-tc", song:3, dur:9000,
+    lines:[
+      {text:"Tera yaar hoon main.",cls:"d1 gold big"},
+      {text:"Sada ke liye.",cls:"d2"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1524117074681-31bd4de22ad3?w=1600&q=85",
+    tint:"rgba(30,18,0,0.26)", kb:"kb-pr", pos:"pos-bl", song:3, dur:9000,
+    lines:[
+      {text:"The laughs that made",cls:"d1"},
+      {text:"everything okay.",cls:"d2 amber"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=1600&q=85",
+    tint:"rgba(22,12,0,0.26)", kb:"kb-pl", pos:"pos-mc", song:3, dur:9500,
+    lines:[
+      {text:"Woh waqt,",cls:"d1"},
+      {text:"jo kabhi lautega nahi —",cls:"d2"},
+      {text:"par dil mein hai.",cls:"d3 gold"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=85",
+    tint:"rgba(20,10,0,0.28)", kb:"kb-zi", pos:"pos-tr", song:3, dur:9000,
+    lines:[
+      {text:"Saath nibhaana,",cls:"d1 gold"},
+      {text:"yeh waada mera.",cls:"d2"}
+    ]
+  },
+
+  /* ═══════════════════════════════
+     KHAIRIYAT — care, distance, birthday
+     ═══════════════════════════════ */
+  {
+    img:"https://images.unsplash.com/photo-1500622944204-b135684e99fd?w=1600&q=85",
+    tint:"rgba(5,5,22,0.33)", kb:"kb-du", pos:"pos-bc", song:4, dur:9500,
+    lines:[
+      {text:"Khairiyat pooch,",cls:"d1 blue"},
+      {text:"kabhi toh khairiyat pooch.",cls:"d2"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=85",
+    tint:"rgba(5,5,22,0.32)", kb:"kb-pl", pos:"pos-ml", song:4, dur:9500,
+    lines:[
+      {text:"Distance changes nothing",cls:"d1"},
+      {text:"that was ever real.",cls:"d2 rose"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=1600&q=85",
+    tint:"rgba(8,5,20,0.35)", kb:"kb-zi", pos:"pos-bc", song:4, dur:10000,
+    lines:[
+      {text:"And today —",cls:"d1 caps"},
+      {text:"on your birthday,",cls:"d2 big gold"},
+      {text:"I just want you to feel it all.",cls:"d3"}
+    ]
+  },
+  {
+    img:"https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=85",
+    tint:"rgba(5,0,18,0.35)", kb:"kb-zo", pos:"pos-mc", song:4, dur:13000,
+    lines:[
+      {text:"Happy Birthday.",cls:"d1 big gold"},
+      {text:"You deserve every beautiful thing.",cls:"d2"},
+      {text:"Every single one.",cls:"d3 rose"}
+    ]
   }
 
-  if (!data) data = { songs: DEFAULT_SONGS, endCard: DEFAULT_END, introText: DEFAULT_INTRO };
+];
 
-  SONGS  = (data.songs  && data.songs.length)  ? data.songs  : DEFAULT_SONGS;
-  SLIDES = (data.slides && data.slides.length) ? normaliseSlides(data.slides) : [];
+/* ── ENGINE ──────────────────────────────────────────────────── */
+let cur      = -1;
+let stTimer  = null;
+let running  = false;
+let ytPlrs   = {};
+let ytOk     = false;
+let activeSng= -1;
 
-  /* Apply intro text */
-  const it = data.introText || DEFAULT_INTRO;
-  setTxt('intro-pre',  it.pre   || DEFAULT_INTRO.pre);
-  // Build title with em highlight
-  const introTitleEl = document.getElementById('intro-title');
-  if (introTitleEl) {
-    const titleText  = it.title || DEFAULT_INTRO.title;
-    const emWord     = it.em    || DEFAULT_INTRO.em;
-    if (emWord && titleText.includes(emWord)) {
-      introTitleEl.innerHTML = titleText.replace(emWord, `<em id="intro-em">${escHtml(emWord)}</em>`);
-    } else {
-      introTitleEl.textContent = titleText;
-    }
-  }
-  setTxt('play-label', it.play || DEFAULT_INTRO.play);
+const $stage = document.getElementById('stage');
+const $pb    = document.getElementById('pb');
+const $pw    = document.getElementById('pw');
+const $ctr   = document.getElementById('ctr');
+const $mbars = document.getElementById('mbars');
+const $slbl  = document.getElementById('slbl');
+const $intro = document.getElementById('intro');
+const $ec    = document.getElementById('ec');
 
-  // Subtitle: use custom if set, otherwise auto-generate from songs
-  const customSub = it.sub && it.sub.trim();
-  if (customSub) {
-    setTxt('intro-sub', customSub);
-  } else {
-    const songNames = SONGS.map(s => s.title.split('—')[0].split('–')[0].trim()).join(' · ');
-    setTxt('intro-sub', songNames);
-  }
-
-  /* Apply end card */
-  const ec = data.endCard || DEFAULT_END;
-  setTxt('ec-pre',  ec.pre    || DEFAULT_END.pre);
-  setTxt('ec-msg',  ec.title  || DEFAULT_END.title);
-  setTxt('ec-sub',  ec.sub    || DEFAULT_END.sub);
-  setTxt('ec-note', ec.note   || DEFAULT_END.note);
-  setTxt('replayBtn', ec.replay || DEFAULT_END.replay);
-
-  /* Apply page title */
-  if (data.pageTitle) document.title = data.pageTitle;
-
-  return data;
-}
-
-function normaliseSlides(raw) {
-  const kbMap = {'zoom-in':'kb-zi','zoom-out':'kb-zo','pan-right':'kb-pr','pan-left':'kb-pl','drift-up':'kb-du'};
-  return raw.map(s => {
-    const imgSrc = s.img || s.image || '';
-    const kb     = kbMap[s.kenBurns] || s.kb || 'kb-zi';
-    const lines  = (s.lines || []).map(ln => {
-      if (ln.cls !== undefined) return ln;
-      const parts = [];
-      if (ln.delay) parts.push(`d${ln.delay}`);
-      if (ln.color) parts.push(ln.color);
-      if (ln.size)  parts.push(ln.size);
-      if (ln.style) parts.push(ln.style);
-      return { text: ln.text || '', cls: parts.join(' ') };
-    });
-    return {
-      img : imgSrc,
-      tint: s.tint || 'rgba(0,0,0,0.3)',
-      kb, pos: s.pos || 'pos-bc',
-      song: typeof s.song === 'number' ? s.song : 0,
-      dur : s.dur || 9000,
-      lines
-    };
-  });
-}
-
-function setTxt(id, txt) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = txt;
-}
-
-/* ═══════════════════════════════════════════════
-   BUILD SLIDES
-═══════════════════════════════════════════════ */
+/* BUILD */
 function buildSlides() {
-  $stage.innerHTML = '';
   SLIDES.forEach((s, i) => {
     const d = document.createElement('div');
-    d.className = 'slide';
-    d.id = `sl-${i}`;
+    d.className = 'slide'; d.id = `sl-${i}`;
     d.innerHTML = `
-      <div class="sbg ${s.kb}" style="background-image:url('${cssEsc(s.img)}')"></div>
+      <div class="sbg ${s.kb}" style="background-image:url('${s.img}')"></div>
       <div class="sovl"></div>
-      <div class="stint" style="background:${cssEsc(s.tint)}"></div>
+      <div class="stint" style="background:${s.tint}"></div>
       <div class="lw ${s.pos}">
-        ${(s.lines||[]).map(l=>`<span class="ll ${l.cls||''}">${escHtml(l.text)}</span>`).join('')}
+        ${s.lines.map(l=>`<span class="ll ${l.cls||''}">${l.text}</span>`).join('')}
       </div>`;
     $stage.appendChild(d);
   });
 }
 
-/* ═══════════════════════════════════════════════
-   AUDIO — Dual: YouTube + Local File
-═══════════════════════════════════════════════ */
-function loadAudio() {
-  const localContainer = document.getElementById('local-audio-container');
-  localContainer.innerHTML = '';
-  localAudios = {};
-
-  SONGS.forEach((song, i) => {
-    if (song.audioData) {
-      // Local audio file
-      const audio = document.createElement('audio');
-      audio.preload = 'auto';
-      const src = document.createElement('source');
-      src.src  = song.audioData;
-      src.type = song.audioType || 'audio/mpeg';
-      audio.appendChild(src);
-      audio.volume = 0;
-      localContainer.appendChild(audio);
-      localAudios[i] = audio;
-
-      // Loop: when track ends, restart from start point
-      audio.addEventListener('ended', () => {
-        audio.currentTime = song.start || 0;
-        audio.play().catch(()=>{});
-      });
-    }
-  });
-
-  // Only load YouTube API if there are YT songs
-  const hasYT = SONGS.some(s => s.ytId && !s.audioData);
-  if (hasYT) loadYT();
-}
-
-function loadYT() {
-  if (window.YT && window.YT.Player) { onYouTubeIframeAPIReady(); return; }
-  const s = document.createElement('script');
-  s.src = 'https://www.youtube.com/iframe_api';
-  document.head.appendChild(s);
-}
-
-window.onYouTubeIframeAPIReady = function () {
-  ytOk = true;
-  SONGS.forEach((song, i) => {
-    if (song.audioData) return; // skip — using local audio
-    if (!song.ytId)    return;
-    const el = document.createElement('div');
-    el.id = `yt-${i}`;
-    $ytc.appendChild(el);
-    ytPlrs[i] = new YT.Player(`yt-${i}`, {
-      height:'1', width:'1',
-      videoId: song.ytId,
-      playerVars:{ start:song.start||0, autoplay:0, controls:0, disablekb:1, fs:0, modestbranding:1, rel:0, enablejsapi:1, origin:window.location.origin||'*' },
-      events:{
-        onReady      : e => onPlayerReady(e, i),
-        onStateChange: e => onPlayerState(e, i)
-      }
-    });
-  });
-};
-
-function onPlayerReady(event, idx) {
-  ytReady[idx] = true;
-  event.target.setVolume(0);
-  event.target.mute();
-  if (pendingSng === idx) playSong(idx);
-}
-
-function onPlayerState(event, idx) {
-  if (event.data === YT.PlayerState.ENDED) {
-    try { event.target.seekTo(SONGS[idx].start||0, true); event.target.playVideo(); } catch {}
-  }
-}
-
-/* ─── PLAY SONG (handles both local + YT) ─── */
-function playSong(idx) {
-  if (localAudios[idx]) {
-    // Local audio
-    const a = localAudios[idx];
-    a.currentTime = SONGS[idx].start || 0;
-    a.play().catch(()=>{});
-    fadeLocalVol(a, 0, 0.85, 2000);
-    return;
-  }
-  // YouTube
-  if (!ytOk || !ytReady[idx] || !ytPlrs[idx]) return;
-  try {
-    const p = ytPlrs[idx];
-    p.unMute();
-    p.seekTo(SONGS[idx].start||0, true);
-    p.playVideo();
-    fadeVol(p, 0, 85, 2000);
-  } catch(e) {}
-}
-
-function switchSong(idx) {
-  if (idx === activeSng) return;
-
-  $slbl.classList.remove('on');
-  setTimeout(() => {
-    $slbl.textContent = SONGS[idx] ? SONGS[idx].title : '';
-    $slbl.classList.add('on');
-  }, 350);
-
-  // Fade out all other songs
-  SONGS.forEach((_, i) => {
-    if (i === idx) return;
-    if (localAudios[i]) {
-      fadeLocalVol(localAudios[i], null, 0, 1200, () => {
-        localAudios[i].pause();
-      });
-    } else if (ytPlrs[i] && ytReady[i]) {
-      fadeVol(ytPlrs[i], null, 0, 1200, () => {
-        try { ytPlrs[i].pauseVideo(); } catch {}
-      });
-    }
-  });
-
-  activeSng  = idx;
-  pendingSng = idx;
-  if (localAudios[idx]) {
-    playSong(idx);
-  } else if (ytOk && ytReady[idx]) {
-    playSong(idx);
-  }
-}
-
-/* ─── VOLUME FADERS ─── */
-function fadeVol(player, from, to, duration, cb) {
-  let current = from;
-  if (current === null) { try { current = player.getVolume(); } catch { current = to > 0 ? 0 : 85; } }
-  const steps = 30, interval = duration / steps, delta = (to - current) / steps;
-  let step = 0;
-  try { player.unMute(); } catch {}
-  const iv = setInterval(() => {
-    step++; current += delta;
-    const vol = Math.round(Math.max(0, Math.min(100, current)));
-    try { player.setVolume(vol); } catch {}
-    if (step >= steps) {
-      clearInterval(iv);
-      try { player.setVolume(to); } catch {}
-      if (cb) cb();
-    }
-  }, interval);
-}
-
-function fadeLocalVol(audio, from, to, duration, cb) {
-  let current = from !== null ? from : audio.volume;
-  const steps = 30, interval = duration / steps, delta = (to - current) / steps;
-  let step = 0;
-  const iv = setInterval(() => {
-    step++; current += delta;
-    audio.volume = Math.max(0, Math.min(1, current));
-    if (step >= steps) {
-      clearInterval(iv);
-      audio.volume = to;
-      if (cb) cb();
-    }
-  }, interval);
-}
-
-/* ═══════════════════════════════════════════════
-   SLIDE ENGINE
-═══════════════════════════════════════════════ */
+/* GO TO SLIDE */
 function goSlide(idx) {
   if (idx >= SLIDES.length) { showEnd(); return; }
   const prev = cur; cur = idx;
+
   if (prev >= 0) {
     const pe = document.getElementById(`sl-${prev}`);
     if (pe) {
@@ -532,35 +451,80 @@ function goSlide(idx) {
       setTimeout(() => pe.classList.remove('active'), 1500);
     }
   }
+
   const el = document.getElementById(`sl-${idx}`);
+  /* Reset Ken Burns by cloning bg node */
   const ob = el.querySelector('.sbg');
-  if (ob) {
-    const nb = document.createElement('div');
-    nb.className = ob.className; nb.style.cssText = ob.style.cssText;
-    ob.parentNode.replaceChild(nb, ob);
-  }
+  const nb = ob.cloneNode(false); nb.className = ob.className; nb.style.cssText = ob.style.cssText;
+  ob.parentNode.replaceChild(nb, ob);
   el.classList.add('active');
+
+  /* Lyrics */
   const lls = el.querySelectorAll('.ll');
-  lls.forEach(l => l.classList.remove('out'));
+  lls.forEach(l => { l.classList.remove('out'); });
   requestAnimationFrame(() => requestAnimationFrame(() => lls.forEach(l => l.classList.add('in'))));
 
+  /* Progress */
   const dur = SLIDES[idx].dur;
   $pb.style.transition = 'none'; $pb.style.width = '0%';
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    $pb.style.transition = `width ${dur/1000}s linear`; $pb.style.width = '100%';
+    $pb.style.transition = `width ${dur/1000}s linear`;
+    $pb.style.width = '100%';
   }));
 
   $ctr.textContent = `${String(idx+1).padStart(2,'0')} / ${String(SLIDES.length).padStart(2,'0')}`;
-  const sng = SLIDES[idx].song || 0;
-  if (sng !== activeSng) switchSong(sng);
+
+  const sng = SLIDES[idx].song;
+  if (sng !== activeSng) { activeSng = sng; switchSong(sng); }
 
   clearTimeout(stTimer);
-  stTimer = setTimeout(() => goSlide(cur+1), dur);
+  stTimer = setTimeout(() => goSlide(cur + 1), dur);
 }
 
-/* ═══════════════════════════════════════════════
-   START / END / REPLAY
-═══════════════════════════════════════════════ */
+/* YOUTUBE */
+function loadYT() {
+  const t = document.createElement('script');
+  t.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(t);
+}
+
+window.onYouTubeIframeAPIReady = function() {
+  ytOk = true;
+  const wrap = document.getElementById('ytc');
+  SONGS.forEach((s, i) => {
+    const el = document.createElement('div'); el.id = `yt-${i}`; wrap.appendChild(el);
+    ytPlrs[i] = new YT.Player(`yt-${i}`, {
+      height:'1', width:'1', videoId: s.ytId,
+      playerVars: { start:s.start, autoplay:0, controls:0, disablekb:1, fs:0, modestbranding:1, rel:0 },
+      events: { onReady: e => e.target.setVolume(0) }
+    });
+  });
+};
+
+function switchSong(idx) {
+  $slbl.classList.remove('on');
+  setTimeout(() => { $slbl.textContent = SONGS[idx].title; $slbl.classList.add('on'); }, 350);
+  if (!ytOk) return;
+  SONGS.forEach((_, i) => {
+    if (i !== idx && ytPlrs[i]) fadeVol(ytPlrs[i], 0, () => { try{ytPlrs[i].pauseVideo();}catch{} });
+  });
+  if (ytPlrs[idx]) {
+    try { ytPlrs[idx].seekTo(SONGS[idx].start, true); ytPlrs[idx].playVideo(); fadeVol(ytPlrs[idx], 82); }
+    catch(e){}
+  }
+}
+
+function fadeVol(player, to, cb) {
+  let v = 0; try { v = player.getVolume()||0; } catch{}
+  const step = to > v ? 3 : -3;
+  const iv = setInterval(() => {
+    v += step;
+    if ((step>0&&v>=to)||(step<0&&v<=to)) { v=to; clearInterval(iv); if(cb) cb(); }
+    try { player.setVolume(Math.max(0,Math.min(100,v))); } catch{}
+  }, 80);
+}
+
+/* START */
 function start() {
   $intro.classList.add('gone');
   [$pw,$ctr,$mbars,$slbl].forEach(e => e.classList.add('on'));
@@ -568,21 +532,16 @@ function start() {
   setTimeout(() => goSlide(0), 1600);
 }
 
+/* END */
 function showEnd() {
   running = false; $pb.style.width = '100%';
-  SONGS.forEach((_, i) => {
-    if (localAudios[i]) {
-      fadeLocalVol(localAudios[i], null, 0, 2000, () => localAudios[i].pause());
-    } else if (ytPlrs[i] && ytReady[i]) {
-      fadeVol(ytPlrs[i], null, 0, 2000, () => { try { ytPlrs[i].pauseVideo(); } catch {} });
-    }
-  });
+  SONGS.forEach((_,i) => { if(ytPlrs[i]) fadeVol(ytPlrs[i],0,()=>{ try{ytPlrs[i].pauseVideo();}catch{} }); });
   setTimeout(() => $ec.classList.add('on'), 2000);
 }
 
+/* REPLAY */
 function replay() {
-  $ec.classList.remove('on');
-  cur = -1; activeSng = -1; pendingSng = -1;
+  $ec.classList.remove('on'); cur=-1; activeSng=-1;
   document.querySelectorAll('.slide').forEach(s => {
     s.classList.remove('active');
     s.querySelectorAll('.ll').forEach(l => l.classList.remove('in','out'));
@@ -591,52 +550,17 @@ function replay() {
   setTimeout(() => goSlide(0), 800);
 }
 
-/* ═══════════════════════════════════════════════
-   KEYBOARD
-═══════════════════════════════════════════════ */
+/* KEYBOARD: → / Space = next, ← = prev */
 document.addEventListener('keydown', e => {
   if (!running) return;
   if (e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); clearTimeout(stTimer); goSlide(cur+1); }
-  if (e.key==='ArrowLeft')               { e.preventDefault(); clearTimeout(stTimer); goSlide(Math.max(0,cur-1)); }
+  if (e.key==='ArrowLeft') { e.preventDefault(); clearTimeout(stTimer); goSlide(Math.max(0,cur-1)); }
 });
 
-/* ═══════════════════════════════════════════════
-   HELPERS
-═══════════════════════════════════════════════ */
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function cssEsc(str) { return String(str).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
-
-/* ═══════════════════════════════════════════════
-   STORAGE LISTENER — live update from admin tab
-═══════════════════════════════════════════════ */
-window.addEventListener('storage', async e => {
-  if (e.key === 'forHerAdmin') {
-    await loadData();
-    buildSlides();
-    loadAudio();
-    cur = -1; activeSng = -1; pendingSng = -1;
-    running = false;
-    $ec.classList.remove('on');
-    $intro.classList.remove('gone');
-    [$pw,$ctr,$mbars,$slbl].forEach(el => el.classList.remove('on'));
-  }
-});
-
-/* ═══════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════ */
-async function init() {
-  await loadData();
-  buildSlides();
-  loadAudio();
-  $loader.classList.add('gone');
-  document.getElementById('playBtn').addEventListener('click', start);
-  document.getElementById('replayBtn').addEventListener('click', replay);
-}
-
-init();
+/* INIT */
+document.getElementById('playBtn').addEventListener('click', start);
+buildSlides();
+loadYT();
 </script>
 </body>
 </html>
